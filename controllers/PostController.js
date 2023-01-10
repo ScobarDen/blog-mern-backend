@@ -99,11 +99,23 @@ export const update = async (req, res) => {
         imageUrl: req.body.imageUrl,
         user: req.userId,
         tags: req.body.tags,
-      }
+      }, (err, doc) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({
+              message: "Не удалось обновить статью",
+            });
+          }
+          if (!doc) {
+            return res.status(404).json({
+              message: "Статья не найдена",
+            });
+          }
+          res.json({
+            success: true
+          });
+        }
     );
-    res.json({
-      success: true,
-    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
