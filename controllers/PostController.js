@@ -31,6 +31,23 @@ export const getAll = async (req, res) => {
   }
 };
 
+export const getLastTags = async (req, res) => {
+  try {
+    const posts = await PostModel.find().limit(5).exec();
+
+    const tags = [...new Set(posts.map((post) => post.tags).flat())].slice(
+      0,
+      5
+    );
+    res.json(tags);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось получить тэги",
+    });
+  }
+};
+
 export const getOne = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -99,22 +116,23 @@ export const update = async (req, res) => {
         imageUrl: req.body.imageUrl,
         user: req.userId,
         tags: req.body.tags,
-      }, (err, doc) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).json({
-              message: "Не удалось обновить статью",
-            });
-          }
-          if (!doc) {
-            return res.status(404).json({
-              message: "Статья не найдена",
-            });
-          }
-          res.json({
-            success: true
+      },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: "Не удалось обновить статью",
           });
         }
+        if (!doc) {
+          return res.status(404).json({
+            message: "Статья не найдена",
+          });
+        }
+        res.json({
+          success: true,
+        });
+      }
     );
   } catch (err) {
     console.log(err);
