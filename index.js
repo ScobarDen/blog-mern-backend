@@ -11,7 +11,10 @@ import { checkAuth, handleValidationErrors } from "./utils/index.js";
 import { UserController, PostController } from "./controllers/index.js";
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(
+    process.env.MONGODB_URI ||
+      "mongodb+srv://ScobarDen:JeYnmmnWsLF6f5M8@cluster0.d3npoq1.mongodb.net/blog?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("DB ok");
   })
