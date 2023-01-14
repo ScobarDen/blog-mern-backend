@@ -43,7 +43,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const comments = await CommentModel.find().exec();
+    const comments = await CommentModel.find().populate('user').exec();
     res.json(comments);
   } catch (err) {
     console.log(err);

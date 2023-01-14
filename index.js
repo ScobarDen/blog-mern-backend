@@ -91,6 +91,7 @@ app.post(
   handleValidationErrors,
   CommentController.create
 );
+app.get("/comments", CommentController.getAll);
 
 app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
