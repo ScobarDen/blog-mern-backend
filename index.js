@@ -17,9 +17,7 @@ import {
 
 mongoose
   .connect(
-    process.env.MONGODB_URI ||
-      "mongodb+srv://ScobarDen:JeYnmmnWsLF6f5M8@cluster0.d3npoq1.mongodb.net/blog?retryWrites=true&w=majority"
-  )
+    process.env.MONGODB_URI)
   .then(() => {
     console.log("DB ok");
   })
