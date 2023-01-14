@@ -1,4 +1,5 @@
 import PostModel from "../models/Post.js";
+import comment from "../models/Comment.js";
 
 export const create = async (req, res) => {
   try {
@@ -69,7 +70,7 @@ export const getOne = async (req, res) => {
         }
         res.json(doc);
       }
-    ).populate("user");
+    ).populate({path:'comments', populate:{path:'user'}}).populate('user');
   } catch (err) {
     console.log(err);
     res.status(500).json({

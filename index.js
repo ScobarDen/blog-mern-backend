@@ -3,15 +3,23 @@ import mongoose from "mongoose";
 import cors from "cors";
 import multer from "multer";
 import {
+  commentCreateValidation,
   loginValidations,
   postCreateValidation,
   registerValidation,
 } from "./validations.js";
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
-import { UserController, PostController } from "./controllers/index.js";
+import {
+  UserController,
+  PostController,
+  CommentController,
+} from "./controllers/index.js";
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(
+    process.env.MONGODB_URI ||
+      "mongodb+srv://ScobarDen:JeYnmmnWsLF6f5M8@cluster0.d3npoq1.mongodb.net/blog?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("DB ok");
   })
@@ -79,6 +87,14 @@ app.patch(
   handleValidationErrors,
   PostController.update
 );
+app.post(
+  "/comments/:id",
+  checkAuth,
+  commentCreateValidation,
+  handleValidationErrors,
+  CommentController.create
+);
+app.get("/comments", CommentController.getLast);
 
 app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
