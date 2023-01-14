@@ -41,9 +41,9 @@ export const create = async (req, res) => {
   }
 };
 
-export const getAll = async (req, res) => {
+export const getLast = async (req, res) => {
   try {
-    const comments = await CommentModel.find().populate('user').exec();
+    const comments = await CommentModel.find().limit(5).populate('user').exec();
     res.json(comments);
   } catch (err) {
     console.log(err);
