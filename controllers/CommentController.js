@@ -17,7 +17,7 @@ export const create = async (req, res) => {
         $inc: { commentsCount: 1 },
         $push: { comments: comment._id },
       },
-      (err, doc) => {
+      async (err, doc) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -29,6 +29,7 @@ export const create = async (req, res) => {
             message: "Статья не найдена",
           });
         }
+        await comment.populate('user');
         res.json(comment);
       }
     );
