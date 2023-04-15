@@ -17,8 +17,7 @@ import {
 import * as fs from "fs";
 
 mongoose
-  .connect(
-    process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("DB ok");
   })
@@ -62,7 +61,7 @@ app.get("/auth/me", checkAuth, UserController.getMe);
 
 app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
   res.json({
-    url: `/uploads/${req.file.originalname}`,
+    url: `uploads/${req.file.originalname}`,
   });
 });
 
