@@ -16,8 +16,10 @@ import {
 } from "./controllers/index.js";
 import * as fs from "fs";
 
+const uri = "mongodb+srv://ScobarDen:JeYnmmnWsLF6f5M8@cluster0.d3npoq1.mongodb.net/blog?retryWrites=true&w=majority";
+
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI || uri )
   .then(() => {
     console.log("DB ok");
   })
@@ -43,7 +45,7 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("upload"));
+app.use('/upload',express.static("upload"));
 
 app.post(
   "/auth/login",
@@ -61,7 +63,7 @@ app.get("/auth/me", checkAuth, UserController.getMe);
 
 app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
   res.json({
-    url: `/upload/${req.file.originalname}`,
+    url: `upload/${req.file.originalname}`,
   });
 });
 
