@@ -14,6 +14,7 @@ import {
   PostController,
   CommentController,
 } from "./controllers/index.js";
+import * as fs from "fs";
 
 mongoose
   .connect(
