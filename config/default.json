@@ -1,0 +1,4 @@
+{
+  "port": 4444,
+  "mongoUri": "mongodb+srv://ScobarDen:JeYnmmnWsLF6f5M8@cluster0.d3npoq1.mongodb.net/blog?retryWrites=true&w=majority"
+}
