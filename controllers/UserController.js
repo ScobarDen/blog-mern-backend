@@ -1,7 +1,7 @@
-import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import UserModel from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { generateUserAvatarURL } from "../utils/helpers.js";
 
 export const register = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ export const register = async (req, res) => {
       email: req.body.email,
       fullName: req.body.fullName,
       passwordHash: hash,
-      avatarUrl: req.body.avatarUrl,
+      avatarUrl: generateUserAvatarURL(),
     });
 
     const user = await doc.save();
