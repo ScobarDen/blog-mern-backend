@@ -20,7 +20,10 @@ const upload = multer({ storage });
 
 router.post("/", checkAuth, upload.single("image"), (req, res) => {
   res.json({
-    url: `upload/${req.file.originalname}`,
+    url:
+      process.env.NODE_ENV === "development"
+        ? `upload/${req.file.originalname}`
+        : `/upload/${req.file.originalname}`, // TODO: refactor this
   });
 });
 
